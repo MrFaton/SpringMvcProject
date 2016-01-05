@@ -7,8 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.nixsolutions.ponarin.dao.RoleDao;
 import com.nixsolutions.ponarin.dao.UserDao;
@@ -18,9 +16,9 @@ import com.nixsolutions.ponarin.service.UserService;
 import com.nixsolutions.ponarin.utils.UserUtils;
 
 @Service
-public class HibernateUserService implements UserService {
+public class UserServiceImpl implements UserService {
     private static final Logger logger = LoggerFactory
-            .getLogger(HibernateUserService.class);
+            .getLogger(UserServiceImpl.class);
 
     @Autowired
     private UserDao userDao;
@@ -32,7 +30,6 @@ public class HibernateUserService implements UserService {
     private UserUtils userUtils;
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public void create(User user) {
         logger.trace("create user");
         checkLogin(user.getLogin());
@@ -41,7 +38,6 @@ public class HibernateUserService implements UserService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public void create(Map<String, String> userForm) {
         logger.trace("create user by user form");
         checkLogin(userForm.get("login"));
@@ -52,7 +48,6 @@ public class HibernateUserService implements UserService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public void update(User user) {
         logger.trace("update user");
         User loadedUser = userDao.findByLogin(user.getLogin());
@@ -67,7 +62,6 @@ public class HibernateUserService implements UserService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public void update(Map<String, String> userForm) {
         logger.trace("update user by user form");
         Role role = roleDao.findByName(userForm.get("role"));
@@ -85,14 +79,12 @@ public class HibernateUserService implements UserService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public void remove(User user) {
         logger.trace("remove user");
         userDao.remove(user);
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public void remove(String login) {
         logger.trace("remove user by login: " + login);
         if (login == null || login.length() == 0) {
@@ -105,14 +97,12 @@ public class HibernateUserService implements UserService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List<User> findAll() {
         logger.trace("find all users");
         return userDao.findAll();
     }
 
     @Override
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public User findByLogin(String login) {
         logger.trace("find user by login: " + login);
         if (login == null || login.length() == 0) {
@@ -122,7 +112,6 @@ public class HibernateUserService implements UserService {
     }
 
     @Override
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public User findByEmail(String email) {
         logger.trace("find user by email: " + email);
         if (email == null || email.length() == 0) {
