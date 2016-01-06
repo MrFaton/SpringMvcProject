@@ -9,7 +9,6 @@
 
 	<properties>
 		<compiler.version>1.7</compiler.version>
-		<!-- <spring.version>4.1.6.RELEASE</spring.version> -->
 		<spring.version>4.2.4.RELEASE</spring.version>
 		<hibernate.version>5.0.6.Final</hibernate.version>
 	</properties>
@@ -35,11 +34,8 @@
 			<artifactId>spring-expression</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
-		<!-- <dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-web</artifactId>
-			<version>${spring.version}</version>
-		</dependency>-->
+		<!-- <dependency> <groupId>org.springframework</groupId> <artifactId>spring-web</artifactId> 
+			<version>${spring.version}</version> </dependency> -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
@@ -56,20 +52,25 @@
 			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-core</artifactId>
-            <version>4.0.3.RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-web</artifactId>
-            <version>4.0.3.RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-config</artifactId>
-            <version>4.0.3.RELEASE</version>
-        </dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>4.0.3.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>4.0.3.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>4.0.3.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-taglibs</artifactId>
+			<version>4.0.3.RELEASE</version>
+		</dependency>
 
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -111,6 +112,12 @@
 			<artifactId>h2</artifactId>
 			<version>1.4.190</version>
 		</dependency>
+		
+		<dependency>
+            <groupId>com.jolbox</groupId>
+            <artifactId>bonecp</artifactId>
+            <version>0.8.0.RELEASE</version>
+        </dependency>
 
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -121,13 +128,6 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
 			<version>${hibernate.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.jolbox</groupId>
-			<artifactId>bonecp</artifactId>
-			<version>0.8.0.RELEASE</version>
-			<scope>test</scope>
 		</dependency>
 
 		<dependency>

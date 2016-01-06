@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "ROLE", schema = "TRAINEESHIP_DB")
-public class Role implements Serializable {
+public class Role {
     private static final long serialVersionUID = 1L;
 
     @Id

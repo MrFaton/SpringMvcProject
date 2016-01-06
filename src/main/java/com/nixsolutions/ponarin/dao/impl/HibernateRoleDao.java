@@ -7,14 +7,14 @@ import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.nixsolutions.ponarin.dao.RoleDao;
 import com.nixsolutions.ponarin.entity.Role;
 
-@Service
+@Repository
 public class HibernateRoleDao implements RoleDao {
     private static final Logger logger = LoggerFactory
             .getLogger(HibernateRoleDao.class);
