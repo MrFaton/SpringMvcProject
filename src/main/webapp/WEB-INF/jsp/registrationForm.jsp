@@ -11,48 +11,58 @@
 </head>
 <body>
 	<H1>Hi new user, please register</H1>
-	<form:form modelAttribute="user" method="POST" enctype="utf8">
-		<br>
-		<tr>
-			<td><label>Login</label></td>
-			<td><form:input path="login" value="" /></td>
-			<form:errors path="login" element="div" />
-		</tr>
-		<tr>
-			<td><label>Password </label></td>
-			<td><form:input path="password" value="" type="password" /></td>
-			<form:errors path="password" element="div" />
-		</tr>
-		<tr>
-			<td><label>Confirm password </label></td>
-			<td><form:input path="matchingPassword" value="" type="password" /></td>
-			<form:errors element="div" />
-		</tr>
-		<tr>
-			<td><label>First name </label></td>
-			<td><form:input path="firstName" value="" /></td>
-			<form:errors path="firstName" element="div" />
-		</tr>
-		<tr>
-			<td><label>Last name </label></td>
-			<td><form:input path="lastName" value="" /></td>
-			<form:errors path="lastName" element="div" />
-		</tr>
-		<tr>
-			<td><label>Email </label></td>
-			<td><form:input path="email" value="" /></td>
-			<form:errors path="email" element="div" />
-		</tr>
-		<tr>
-			<form:select path="role">
-				<form:option value="Admin">Admin</form:option>
-				<form:option value="User">User</form:option>
-			</form:select>
-		</tr>
-
-		<button type="submit">Submit</button>
-	</form:form>
 	<br>
-	<a href="<c:url value="login" />">Login </a>
+	<table align="left" border="0" cellpadding="2" cellspacing="5">
+		<form:form modelAttribute="user" method="POST" enctype="utf8">
+			<tr>
+				<td><label>Login</label></td>
+				<td><form:input path="login" value="" /></td>
+				<td><form:errors path="login" element="div" /></td>
+			</tr>
+			<tr>
+				<td><label>Password </label></td>
+				<td><form:input path="password" value="" type="password" /></td>
+				<td><form:errors path="password" element="div" /></td>
+			</tr>
+			<tr>
+				<td><label>Confirm password </label></td>
+				<td><form:input path="matchingPassword" value=""
+						type="password" /></td>
+				<td><form:errors element="div" /></td>
+			</tr>
+			<tr>
+				<td><label>First name </label></td>
+				<td><form:input path="firstName" value="" /></td>
+				<td><form:errors path="firstName" element="div" /></td>
+			</tr>
+			<tr>
+				<td><label>Last name </label></td>
+				<td><form:input path="lastName" value="" /></td>
+				<td><form:errors path="lastName" element="div" /></td>
+			</tr>
+			<tr>
+				<td><label>Email </label></td>
+				<td><form:input path="email" value="" /></td>
+				<td><form:errors path="email" element="div" /></td>
+			</tr>
+			<tr>
+				<td><label>Birthday</label></td>
+				<td><form:input path="birthDay" placeholder="25-12-1990" /></td>
+				<td><form:errors path="birthDay" element="div" /></td>
+			</tr>
+			<tr>
+				<td><form:select path="role">
+						<form:option value="Admin">Admin</form:option>
+						<form:option value="User">User</form:option>
+					</form:select></td>
+			</tr>
+			<tr>
+				<td>
+					<button type="submit">Submit</button>
+					<button type="reset">Cancel</button>
+				</td>
+			</tr>
+		</form:form>
+	</table>
 </body>
 </html>

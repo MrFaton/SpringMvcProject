@@ -10,11 +10,11 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.nixsolutions.ponarin.annotation.PasswordMatches;
@@ -37,51 +37,44 @@ public class User implements Serializable {
     private Long id;
 
     @NotNull
-    @NotEmpty
     @NotBlank
-    @Length(min = 2, max = 50, message = "Login must have consists 2 to 50 symbols")
+    @Length(min = 2, max = 50, message = "Login must between 2 and 50 symbols")
     @Column(name = "LOGIN", nullable = false, unique = true, length = 50)
     private String login;
 
     @NotNull
-    @NotEmpty
     @NotBlank
-    @Length(min = 2, max = 50, message = "Password must consists from 2 to 50 symbols")
+    @Length(min = 2, max = 50, message = "Password must between 2 and 50 symbols")
     @Column(name = "PASSWORD", nullable = false, length = 50)
     private String password;
 
     @NotNull
-    @NotEmpty
     @NotBlank
-    @Length(min = 2, max = 50, message = "Password must consists from 2 to 50 symbols")
+    @Length(min = 2, max = 50, message = "Password must between 2 and 50 symbols")
     @Transient
     private String matchingPassword;
 
     @NotNull
-    @NotEmpty
     @NotBlank
     @Email(message = "Email not valid")
     @Column(name = "EMAIL", nullable = false, unique = true, length = 50)
     private String email;
 
     @NotNull
-    @NotEmpty
     @NotBlank
-    @Length(min = 2, max = 50, message = "First name must consists from 2 to 50 symbols")
+    @Length(min = 2, max = 50, message = "First name must between 2 and 50 symbols")
     @Column(name = "FIRST_NAME", nullable = false, length = 50)
     private String firstName;
 
     @NotNull
-    @NotEmpty
     @NotBlank
-    @Length(min = 2, max = 50, message = "Last name must consists from 2 to 50 symbols")
+    @Length(min = 2, max = 50, message = "Last name must between 2 and 50 symbols")
     @Column(name = "LAST_NAME", nullable = false, length = 50)
     private String lastName;
 
     @NotNull
-    @NotEmpty
-    @NotBlank
     @DateTimeFormat(pattern = "dd-MM-yyy")
+    @Past
     @Column(name = "BIRTH_DAY", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date birthDay;
