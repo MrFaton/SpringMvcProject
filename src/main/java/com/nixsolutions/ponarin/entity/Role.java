@@ -8,10 +8,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "ROLE", schema = "TRAINEESHIP_DB")
-public class Role {
+public class Role implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -19,6 +24,10 @@ public class Role {
     @Column(name = "ROLE_ID", nullable = false)
     private Integer id;
 
+    @NotBlank
+    @NotEmpty
+    @NotNull(message = "Role can't be blank")
+    @Length(min = 2, max = 50, message = "Role length must be from 2 to 50")
     @Column(name = "NAME", nullable = false, unique = true, length = 50)
     private String name;
 

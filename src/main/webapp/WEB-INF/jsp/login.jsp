@@ -73,6 +73,9 @@
 
 		</form>
 	</div>
+	
+	<p>Or you can <a
+            href="<c:url value="registration"/>">register</a></p>
 
 </body>
 </html>

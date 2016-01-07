@@ -8,15 +8,27 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.nixsolutions.ponarin.annotation.PasswordMatches;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+@PasswordMatches
 @Entity
 @Table(name = "USER", schema = "TRAINEESHIP_DB")
-public class User {
+public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -24,21 +36,52 @@ public class User {
     @Column(name = "USER_ID", nullable = false)
     private Long id;
 
+    @NotNull
+    @NotEmpty
+    @NotBlank
+    @Length(min = 2, max = 50, message = "Login must have consists 2 to 50 symbols")
     @Column(name = "LOGIN", nullable = false, unique = true, length = 50)
     private String login;
 
+    @NotNull
+    @NotEmpty
+    @NotBlank
+    @Length(min = 2, max = 50, message = "Password must consists from 2 to 50 symbols")
     @Column(name = "PASSWORD", nullable = false, length = 50)
     private String password;
 
+    @NotNull
+    @NotEmpty
+    @NotBlank
+    @Length(min = 2, max = 50, message = "Password must consists from 2 to 50 symbols")
+    @Transient
+    private String matchingPassword;
+
+    @NotNull
+    @NotEmpty
+    @NotBlank
+    @Email(message = "Email not valid")
     @Column(name = "EMAIL", nullable = false, unique = true, length = 50)
     private String email;
 
+    @NotNull
+    @NotEmpty
+    @NotBlank
+    @Length(min = 2, max = 50, message = "First name must consists from 2 to 50 symbols")
     @Column(name = "FIRST_NAME", nullable = false, length = 50)
     private String firstName;
 
+    @NotNull
+    @NotEmpty
+    @NotBlank
+    @Length(min = 2, max = 50, message = "Last name must consists from 2 to 50 symbols")
     @Column(name = "LAST_NAME", nullable = false, length = 50)
     private String lastName;
 
+    @NotNull
+    @NotEmpty
+    @NotBlank
+    @DateTimeFormat(pattern = "dd-MM-yyy")
     @Column(name = "BIRTH_DAY", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date birthDay;
@@ -69,6 +112,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getMatchingPassword() {
+        return matchingPassword;
+    }
+
+    public void setMatchingPassword(String matchingPassword) {
+        this.matchingPassword = matchingPassword;
     }
 
     public String getEmail() {

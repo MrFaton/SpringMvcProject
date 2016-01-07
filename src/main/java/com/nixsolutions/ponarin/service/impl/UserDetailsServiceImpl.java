@@ -25,12 +25,18 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         com.nixsolutions.ponarin.entity.User nativeUser = userService
                 .findByLogin(login);
 
+        if (nativeUser == null) {
+            throw new UsernameNotFoundException(
+                    "User with login " + login + "is not exists");
+        }
+
         Collection<GrantedAuthority> grantedAuthorities = new HashSet<>(0);
 
-        grantedAuthorities.add(
-                new SimpleGrantedAuthority(nativeUser.getRole().getName()));
-        
-        System.out.println(nativeUser.getRole().getName());
+        String role = "ROLE_" + nativeUser.getRole().getName().toUpperCase();
+
+        grantedAuthorities.add(new SimpleGrantedAuthority(role));
+
+        System.out.println(role);
 
         return new User(nativeUser.getLogin(), nativeUser.getPassword(), true,
                 true, true, true, grantedAuthorities);
