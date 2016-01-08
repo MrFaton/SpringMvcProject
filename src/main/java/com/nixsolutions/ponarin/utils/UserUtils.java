@@ -57,22 +57,18 @@ public class UserUtils {
     }
 
     public boolean isLoginExists(String login) {
-        User user = userDao.findByLogin(login);
-        if (user == null) {
-            return false;
-        }
-        if (login.equalsIgnoreCase(user.getLogin())) {
+        if (userDao.findByLogin(login) == null) {
             return false;
         }
         return true;
     }
 
-    public boolean isEmailExists(String email) {
-        User user = userDao.findByEmail(email);
-        if (user == null) {
+    public boolean isEmailExists(UserForm form) {
+        User loadedUser = userDao.findByEmail(form.getEmail());
+        if (loadedUser == null) {
             return false;
         }
-        if (email.equalsIgnoreCase(user.getEmail())) {
+        if (form.getLogin().equalsIgnoreCase(loadedUser.getLogin())) {
             return false;
         }
         return true;

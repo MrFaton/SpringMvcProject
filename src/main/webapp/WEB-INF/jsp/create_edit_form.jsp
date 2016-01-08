@@ -26,10 +26,15 @@
 	<table align="left" border="0" cellpadding="2" cellspacing="5">
 		<form:form modelAttribute="userForm" method="POST" enctype="utf8">
 			<tr>
-                <td><label>Login</label></td>
-                <td><form:input path="login" value="" /></td>
-                <td><form:errors path="login" element="div" /></td>
-            </tr>
+				<td><label>Login</label></td>
+				<td><c:if test="${edit==null}">
+						<form:input path="login" value="" />
+					</c:if>
+					<c:if test="${edit!=null}">
+						<form:input path="login" value="" readonly="true" />
+					</c:if></td>
+				<td><form:errors path="login" element="div" /></td>
+			</tr>
 			<tr>
 				<td><label>Password </label></td>
 				<td><form:input path="password" value="" type="password" /></td>

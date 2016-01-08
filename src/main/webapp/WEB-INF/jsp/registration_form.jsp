@@ -10,7 +10,10 @@
 <title>Registration</title>
 </head>
 <body>
-	<H1>Hi new user, please register</H1>
+	<H1>
+		Hi new user, here you can register or you can try to <a
+			href="<c:url value="/login"/>">login</a>
+	</H1>
 	<br>
 	<table align="left" border="0" cellpadding="2" cellspacing="5">
 		<form:form modelAttribute="userForm" method="POST" enctype="utf8">
@@ -49,12 +52,6 @@
 				<td><label>Birthday</label></td>
 				<td><form:input path="birthDay" placeholder="25-12-1990" /></td>
 				<td><form:errors path="birthDay" element="div" /></td>
-			</tr>
-			<tr>
-				<td><form:select path="role">
-						<form:option value="Admin">Admin</form:option>
-						<form:option value="User">User</form:option>
-					</form:select></td>
 			</tr>
 			<tr>
 				<td>

@@ -38,7 +38,7 @@ public class RegistrationController {
     public String showRegistrationForm(ModelMap model) {
         UserForm userForm = new UserForm();
         model.addAttribute("userForm", userForm);
-        return "registrationForm";
+        return "registration_form";
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
@@ -46,23 +46,23 @@ public class RegistrationController {
             @ModelAttribute("userForm") @Valid UserForm userForm,
             BindingResult result, ModelMap model) {
 
-        model.addAttribute("personForm", userForm);
+        model.addAttribute("userForm", userForm);
         if (result.hasErrors()) {
-            return "registrationForm";
+            return "registration_form";
         }
 
         if (userUtils.isLoginExists(userForm.getLogin())) {
             result.rejectValue("login", "", "Login already exists");
-            return "registrationForm";
+            return "registration_form";
         }
-        if (userUtils.isEmailExists(userForm.getEmail())) {
+        if (userUtils.isEmailExists(userForm)) {
             result.rejectValue("email", "", "Email already exists");
-            return "registrationForm";
+            return "registration_form";
         }
 
-        Role role = roleDao.findByName(userForm.getRole());
+        Role role = roleDao.findByName("User");
 
         userDao.create(userUtils.getUserByForm(userForm, role));
-        return "registrationFormSuccess";
+        return "registration_form_success";
     }
 }

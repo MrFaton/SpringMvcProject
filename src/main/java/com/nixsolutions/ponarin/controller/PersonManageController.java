@@ -8,7 +8,6 @@ import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,29 +32,39 @@ public class PersonManageController {
     private UserUtils userUtils;
 
     @RequestMapping(value = "/admin/create", method = RequestMethod.GET)
-    public String showCreateForm(ModelMap model) {
+    public ModelAndView showCreateForm() {
+        ModelAndView model = new ModelAndView();
+
         UserForm userForm = new UserForm();
-        model.addAttribute("userForm", userForm);
-        return "create_edit_form";
+
+        model.addObject("userForm", userForm);
+        model.setViewName("create_edit_form");
+
+        return model;
     }
 
     @RequestMapping(value = "/admin/create", method = RequestMethod.POST)
     public ModelAndView create(
             @ModelAttribute("userForm") @Valid UserForm userForm,
             BindingResult result) {
+
         ModelAndView model = new ModelAndView();
-        model.addObject("personForm", userForm);
+        model.addObject("userForm", userForm);
+
         if (result.hasErrors()) {
             model.setViewName("create_edit_form");
+            return model;
         }
 
         if (userUtils.isLoginExists(userForm.getLogin())) {
             result.rejectValue("login", "", "Login already exists");
             model.setViewName("create_edit_form");
+            return model;
         }
-        if (userUtils.isEmailExists(userForm.getEmail())) {
+        if (userUtils.isEmailExists(userForm)) {
             result.rejectValue("email", "", "Email already exists");
             model.setViewName("create_edit_form");
+            return model;
         }
 
         Role role = roleDao.findByName(userForm.getRole());
@@ -67,9 +76,12 @@ public class PersonManageController {
 
     @RequestMapping(value = "/admin/edit", method = RequestMethod.GET)
     public ModelAndView showEditForm(HttpServletRequest request) {
+
         request.setAttribute("edit", true);
-        User user = userDao.findByLogin(request.getParameter("login"));
+
+        User user = userDao.findByLogin(request.getParameter("person"));
         UserForm userForm = userUtils.getFormByUser(user);
+
         ModelAndView model = new ModelAndView();
         model.addObject("userForm", userForm);
         model.setViewName("create_edit_form");
@@ -80,24 +92,21 @@ public class PersonManageController {
     public ModelAndView edit(
             @ModelAttribute("userForm") @Valid UserForm userForm,
             BindingResult result, HttpServletRequest request) {
-        
-        System.out.println(userForm.getLogin());
-        System.out.println(userForm.getFirstName());
-        
-//        request.setAttribute("edit", true);
+
+        request.setAttribute("edit", true);
+
         ModelAndView model = new ModelAndView();
-        model.addObject("personForm", userForm);
+        model.addObject("userForm", userForm);
+
         if (result.hasErrors()) {
             model.setViewName("create_edit_form");
+            return model;
         }
-        
-        if (userUtils.isLoginExists(userForm.getLogin())) {
-            result.rejectValue("login", "", "Login already exists");
-            model.setViewName("create_edit_form");
-        }
-        if (userUtils.isEmailExists(userForm.getEmail())) {
+
+        if (userUtils.isEmailExists(userForm)) {
             result.rejectValue("email", "", "Email already exists");
             model.setViewName("create_edit_form");
+            return model;
         }
 
         Role role = roleDao.findByName(userForm.getRole());
@@ -105,7 +114,22 @@ public class PersonManageController {
         User user = userUtils.getUserByForm(userForm, role);
         User dbUser = userDao.findByLogin(user.getLogin());
         user.setId(dbUser.getId());
+
         userDao.update(user);
+
+        model.setViewName("redirect:/");
+        return model;
+    }
+
+    @RequestMapping(value = "/admin/delete", method = RequestMethod.GET)
+    public ModelAndView delete(HttpServletRequest request) {
+        ModelAndView model = new ModelAndView();
+
+        String login = request.getParameter("person");
+        User user = userDao.findByLogin(login);
+
+        userDao.remove(user);
+
         model.setViewName("redirect:/");
         return model;
     }
