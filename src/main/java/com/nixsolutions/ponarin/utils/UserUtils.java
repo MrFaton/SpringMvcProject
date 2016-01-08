@@ -2,26 +2,30 @@ package com.nixsolutions.ponarin.utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
-import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.nixsolutions.ponarin.dao.UserDao;
 import com.nixsolutions.ponarin.entity.Role;
 import com.nixsolutions.ponarin.entity.User;
+import com.nixsolutions.ponarin.form.UserForm;
 
 @Component
 public class UserUtils {
-    public User getUserByForm(Map<String, String> userForm, Role role) {
+    @Autowired
+    private UserDao userDao;
+
+    public User getUserByForm(UserForm userForm, Role role) {
         User user = new User();
 
-        user.setLogin(userForm.get("login"));
-        user.setPassword(userForm.get("password"));
-        user.setEmail(userForm.get("email"));
-        user.setFirstName(userForm.get("first_name"));
-        user.setLastName(userForm.get("last_name"));
+        user.setLogin(userForm.getLogin());
+        user.setPassword(userForm.getPassword());
+        user.setEmail(userForm.getEmail());
+        user.setFirstName(userForm.getFirstName());
+        user.setLastName(userForm.getLastName());
 
-        String birthDayStr = userForm.get("birth_day");
+        String birthDayStr = userForm.getBirthDay();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         try {
             user.setBirthDay(dateFormat.parse(birthDayStr));
@@ -34,21 +38,43 @@ public class UserUtils {
         return user;
     }
 
-    public Map<String, String> getUserForm(User user) {
-        Map<String, String> userForm = new HashMap<>();
+    public UserForm getFormByUser(User user) {
+        UserForm userForm = new UserForm();
 
-        userForm.put("login", user.getLogin());
-        userForm.put("password", user.getPassword());
-        userForm.put("confirm_password", user.getPassword());
-        userForm.put("email", user.getEmail());
-        userForm.put("first_name", user.getFirstName());
-        userForm.put("last_name", user.getLastName());
+        userForm.setLogin(user.getLogin());
+        userForm.setPassword(user.getPassword());
+        userForm.setMatchingPassword(user.getPassword());
+        userForm.setEmail(user.getEmail());
+        userForm.setFirstName(user.getFirstName());
+        userForm.setLastName(user.getLastName());
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        userForm.put("birth_day", dateFormat.format(user.getBirthDay()));
+        userForm.setBirthDay(dateFormat.format(user.getBirthDay()));
 
-        userForm.put("role", user.getRole().getName());
+        userForm.setRole(user.getRole().getName());
 
         return userForm;
+    }
+
+    public boolean isLoginExists(String login) {
+        User user = userDao.findByLogin(login);
+        if (user == null) {
+            return false;
+        }
+        if (login.equalsIgnoreCase(user.getLogin())) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean isEmailExists(String email) {
+        User user = userDao.findByEmail(email);
+        if (user == null) {
+            return false;
+        }
+        if (email.equalsIgnoreCase(user.getEmail())) {
+            return false;
+        }
+        return true;
     }
 }

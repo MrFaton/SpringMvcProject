@@ -1,4 +1,4 @@
-package com.nixsolutions.ponarin.service.impl;
+package com.nixsolutions.ponarin.service;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -12,17 +12,17 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.nixsolutions.ponarin.service.UserService;
+import com.nixsolutions.ponarin.dao.UserDao;
 
 @Service
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class PersonDetailsService implements UserDetailsService {
     @Autowired
-    private UserService userService;
+    private UserDao userDao;
 
     @Override
     public UserDetails loadUserByUsername(final String login)
             throws UsernameNotFoundException {
-        com.nixsolutions.ponarin.entity.User nativeUser = userService
+        com.nixsolutions.ponarin.entity.User nativeUser = userDao
                 .findByLogin(login);
 
         if (nativeUser == null) {

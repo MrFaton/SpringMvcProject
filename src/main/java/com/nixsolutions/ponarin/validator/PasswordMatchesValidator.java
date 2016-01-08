@@ -4,15 +4,18 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 import com.nixsolutions.ponarin.annotation.PasswordMatches;
-import com.nixsolutions.ponarin.entity.User;
+import com.nixsolutions.ponarin.form.UserForm;
 
-public class PasswordMatchesValidator implements ConstraintValidator<PasswordMatches, Object> {   
+public class PasswordMatchesValidator
+        implements ConstraintValidator<PasswordMatches, UserForm> {
     @Override
-    public void initialize(PasswordMatches constraintAnnotation) {       
+    public void initialize(PasswordMatches constraintAnnotation) {
+        // NOP
     }
+
     @Override
-    public boolean isValid(Object obj, ConstraintValidatorContext context){   
-        User user = (User) obj;
-        return user.getPassword().equals(user.getMatchingPassword());    
-    }     
+    public boolean isValid(UserForm form,
+            ConstraintValidatorContext context) {
+        return form.getPassword().equals(form.getMatchingPassword());
+    }
 }

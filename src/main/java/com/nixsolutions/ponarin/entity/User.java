@@ -8,24 +8,12 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
-
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotBlank;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import com.nixsolutions.ponarin.annotation.PasswordMatches;
-
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-@PasswordMatches
 @Entity
 @Table(name = "USER", schema = "TRAINEESHIP_DB")
 public class User implements Serializable {
@@ -36,45 +24,21 @@ public class User implements Serializable {
     @Column(name = "USER_ID", nullable = false)
     private Long id;
 
-    @NotNull
-    @NotBlank
-    @Length(min = 2, max = 50, message = "Login must between 2 and 50 symbols")
     @Column(name = "LOGIN", nullable = false, unique = true, length = 50)
     private String login;
 
-    @NotNull
-    @NotBlank
-    @Length(min = 2, max = 50, message = "Password must between 2 and 50 symbols")
     @Column(name = "PASSWORD", nullable = false, length = 50)
     private String password;
 
-    @NotNull
-    @NotBlank
-    @Length(min = 2, max = 50, message = "Password must between 2 and 50 symbols")
-    @Transient
-    private String matchingPassword;
-
-    @NotNull
-    @NotBlank
-    @Email(message = "Email not valid")
     @Column(name = "EMAIL", nullable = false, unique = true, length = 50)
     private String email;
 
-    @NotNull
-    @NotBlank
-    @Length(min = 2, max = 50, message = "First name must between 2 and 50 symbols")
     @Column(name = "FIRST_NAME", nullable = false, length = 50)
     private String firstName;
 
-    @NotNull
-    @NotBlank
-    @Length(min = 2, max = 50, message = "Last name must between 2 and 50 symbols")
     @Column(name = "LAST_NAME", nullable = false, length = 50)
     private String lastName;
 
-    @NotNull
-    @DateTimeFormat(pattern = "dd-MM-yyy")
-    @Past
     @Column(name = "BIRTH_DAY", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date birthDay;
@@ -105,14 +69,6 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getMatchingPassword() {
-        return matchingPassword;
-    }
-
-    public void setMatchingPassword(String matchingPassword) {
-        this.matchingPassword = matchingPassword;
     }
 
     public String getEmail() {

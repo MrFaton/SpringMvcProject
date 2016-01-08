@@ -15,16 +15,7 @@
 	<mvc:annotation-driven />
 	<tx:annotation-driven transaction-manager="transactionManager" />
 
-	<context:component-scan base-package="com.nixsolutions.ponarin.*" />
-
-	<bean id="conversionService"
-		class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
-		<property name="formatters">
-			<set>
-				<ref bean="roleFormatter" />
-			</set>
-		</property>
-	</bean>
+	<context:component-scan base-package="com.nixsolutions.ponarin" />
 
 	<bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource"
 		destroy-method="close">

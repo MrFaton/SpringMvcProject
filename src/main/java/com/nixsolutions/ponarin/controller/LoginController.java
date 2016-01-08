@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.nixsolutions.ponarin.service.UserService;
+import com.nixsolutions.ponarin.dao.UserDao;
 
 @Controller
 public class LoginController {
     @Autowired
-    private UserService userService;
+    private UserDao userDao;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String welcomePage(ModelMap model) {
@@ -33,7 +33,7 @@ public class LoginController {
                 .getAuthorities();
 
         if (authorities.contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
-            model.addAttribute("userList", userService.findAll());
+            model.addAttribute("userList", userDao.findAll());
             return "admin";
         } else {
             return "user";

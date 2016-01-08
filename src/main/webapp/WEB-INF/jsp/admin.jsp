@@ -24,9 +24,7 @@ table, th, td {
 			href="<c:url value="j_spring_security_logout"/>">Logout</a>)
 	</p>
 	<p>
-		<a
-			href="${pageContext.request.contextPath}/admin/create_update_user.jsp">Add
-			new user</a>
+		<a href="<c:url value="/admin/create"/>">Add new user</a>
 	</p>
 	<div align="center">
 		<mytag:all_users_table userList="${userList}" />
