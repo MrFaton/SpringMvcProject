@@ -39,7 +39,6 @@ public class UserForm {
     @Pattern(regexp = "(0?[1-9]|[12][0-9]|3[01])-(0?[1-9]|1[012])-((19|20)\\d\\d)", message = "Invalid date format, (dd-MM-yyyy) format required")
     private String birthDay;
 
-    @NotBlank
     private String role;
 
     public String getLogin() {
