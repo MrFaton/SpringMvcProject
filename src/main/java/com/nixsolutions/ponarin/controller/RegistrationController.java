@@ -3,6 +3,7 @@ package com.nixsolutions.ponarin.controller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ import com.nixsolutions.ponarin.entity.Role;
 import com.nixsolutions.ponarin.entity.User;
 import com.nixsolutions.ponarin.form.UserForm;
 import com.nixsolutions.ponarin.utils.UserUtils;
+
+import net.tanesha.recaptcha.ReCaptchaImpl;
+import net.tanesha.recaptcha.ReCaptchaResponse;
 
 @Controller
 public class RegistrationController {
@@ -44,10 +48,24 @@ public class RegistrationController {
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public String registerUserAccount(
             @ModelAttribute("userForm") @Valid UserForm userForm,
-            BindingResult result, ModelMap model) {
+            BindingResult result, ModelMap model, HttpServletRequest request) {
 
         model.addAttribute("userForm", userForm);
         if (result.hasErrors()) {
+            return "registration_form";
+        }
+
+        ReCaptchaImpl reCaptcha = new ReCaptchaImpl();
+        reCaptcha.setPrivateKey("6LeD4BQTAAAAAPRpVTFZbmv17K_YqjVtRig6cwme");
+
+        String remoteAddr = request.getRemoteAddr();
+        String challengeField = request
+                .getParameter("recaptcha_challenge_field");
+        String responseField = request.getParameter("recaptcha_response_field");
+        ReCaptchaResponse reCaptchaResponse = reCaptcha.checkAnswer(remoteAddr,
+                challengeField, responseField);
+        if (!reCaptchaResponse.isValid()) {
+            model.addAttribute("invalidCaptcha", "Captcha Is Invalid");
             return "registration_form";
         }
 

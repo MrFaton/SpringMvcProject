@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="captcha" uri="/WEB-INF/tld/captcha.tld"%>
 <%@ page session="false"%>
 <html>
 <head>
@@ -52,6 +53,12 @@
 				<td><label>Birthday</label></td>
 				<td><form:input path="birthDay" placeholder="25-12-1990" /></td>
 				<td><form:errors path="birthDay" element="div" /></td>
+			</tr>
+			<tr>
+				<td colspan='2'><captcha:captcha themeName="clean"
+						publickey="6LeD4BQTAAAAAPJmHF5lKV-Se_-tJ9nvRSrYZfhk"
+						privatekey="6LeD4BQTAAAAAPRpVTFZbmv17K_YqjVtRig6cwme" /></td>
+				<td>${invalidCaptcha}</td>
 			</tr>
 			<tr>
 				<td>
