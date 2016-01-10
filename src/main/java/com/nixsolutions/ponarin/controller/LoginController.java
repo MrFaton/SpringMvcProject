@@ -21,7 +21,7 @@ public class LoginController {
     @Autowired
     private UserDao userDao;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = { "", "/" }, method = RequestMethod.GET)
     public String mainPage(ModelMap model) {
         Authentication auth = SecurityContextHolder.getContext()
                 .getAuthentication();
@@ -36,8 +36,11 @@ public class LoginController {
         if (authorities.contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
             model.addAttribute("userList", userDao.findAll());
             return View.PAGE_ADMIN;
-        } else {
+        } else if (authorities
+                .contains(new SimpleGrantedAuthority("ROLE_USER"))) {
             return View.PAGE_USER;
+        } else {
+            return "login";
         }
     }
 

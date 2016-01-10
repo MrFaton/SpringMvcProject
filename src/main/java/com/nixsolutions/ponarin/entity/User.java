@@ -8,6 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.google.common.base.Objects;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -109,6 +112,31 @@ public class User implements Serializable {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id, login, password, email, firstName, lastName,
+                birthDay, role);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        User other = (User) obj;
+        return Objects.equal(this.id, other.id)
+                && Objects.equal(this.login, other.login)
+                && Objects.equal(this.password, other.password)
+                && Objects.equal(this.email, other.email)
+                && Objects.equal(this.firstName, other.firstName)
+                && Objects.equal(this.lastName, other.lastName)
+                && Objects.equal(this.birthDay, other.birthDay)
+                && Objects.equal(this.role, other.role);
     }
 
     @Override
