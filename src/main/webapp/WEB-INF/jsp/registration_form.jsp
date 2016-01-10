@@ -9,6 +9,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Registration</title>
+<style>
+.error {
+	color: red;
+}
+</style>
 </head>
 <body>
 	<h2 align="center">
@@ -21,44 +26,44 @@
 			<tr>
 				<td><label>Login</label></td>
 				<td><form:input path="login" value="" /></td>
-				<td><form:errors path="login" element="div" /></td>
+				<td><form:errors path="login" cssClass="error" element="div" /></td>
 			</tr>
 			<tr>
 				<td><label>Password </label></td>
 				<td><form:input path="password" value="" type="password" /></td>
-				<td><form:errors path="password" element="div" /></td>
+				<td><form:errors path="password" cssClass="error" element="div" /></td>
 			</tr>
 			<tr>
 				<td><label>Confirm password </label></td>
 				<td><form:input path="matchingPassword" value=""
 						type="password" /></td>
-				<td><form:errors element="div" /></td>
+				<td><form:errors element="div" cssClass="error"/></td>
 			</tr>
 			<tr>
 				<td><label>First name </label></td>
 				<td><form:input path="firstName" value="" /></td>
-				<td><form:errors path="firstName" element="div" /></td>
+				<td><form:errors path="firstName" cssClass="error" element="div" /></td>
 			</tr>
 			<tr>
 				<td><label>Last name </label></td>
 				<td><form:input path="lastName" value="" /></td>
-				<td><form:errors path="lastName" element="div" /></td>
+				<td><form:errors path="lastName" cssClass="error" element="div" /></td>
 			</tr>
 			<tr>
 				<td><label>Email </label></td>
 				<td><form:input path="email" value="" /></td>
-				<td><form:errors path="email" element="div" /></td>
+				<td><form:errors path="email" cssClass="error" element="div" /></td>
 			</tr>
 			<tr>
 				<td><label>Birthday</label></td>
 				<td><form:input path="birthDay" placeholder="25-12-1990" /></td>
-				<td><form:errors path="birthDay" element="div" /></td>
+				<td><form:errors path="birthDay" cssClass="error" element="div" /></td>
 			</tr>
 			<tr>
 				<td colspan='2'><captcha:captcha themeName="clean"
 						publickey="6LeD4BQTAAAAAPJmHF5lKV-Se_-tJ9nvRSrYZfhk"
 						privatekey="6LeD4BQTAAAAAPRpVTFZbmv17K_YqjVtRig6cwme" /></td>
-				<td>${invalidCaptcha}</td>
+				<td class="error">${invalidCaptcha}</td>
 			</tr>
 			<tr>
 				<td>

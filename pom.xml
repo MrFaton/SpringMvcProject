@@ -10,7 +10,6 @@
 	<properties>
 		<compiler.version>1.7</compiler.version>
 		<spring.version>4.2.4.RELEASE</spring.version>
-		<hibernate.version>5.0.6.Final</hibernate.version>
 	</properties>
 
 	<dependencies>
@@ -32,6 +31,11 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-expression</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
@@ -131,12 +135,7 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
-			<version>${hibernate.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
-			<version>${hibernate.version}</version>
+			<version>5.0.6.Final</version>
 		</dependency>
 
 		<dependency>

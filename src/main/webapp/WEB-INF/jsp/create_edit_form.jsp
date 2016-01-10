@@ -29,8 +29,8 @@
 	</c:if>
 
 	<br>
-	<table align="left" border="0" cellpadding="2" cellspacing="5">
-		<form:form modelAttribute="userForm" method="POST" enctype="utf8">
+	<form:form modelAttribute="userForm" method="POST" enctype="utf8">
+		<table align="left" border="0" cellpadding="2" cellspacing="5">
 			<tr>
 				<td><label>Login</label></td>
 				<td><c:if test="${edit==null}">
@@ -84,7 +84,7 @@
 					<button type="reset">Cancel</button>
 				</td>
 			</tr>
-		</form:form>
-	</table>
+		</table>
+	</form:form>
 </body>
 </html>
