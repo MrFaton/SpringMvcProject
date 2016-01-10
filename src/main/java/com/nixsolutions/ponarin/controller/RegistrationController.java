@@ -72,11 +72,7 @@ public class RegistrationController {
         String challengeField = request
                 .getParameter("recaptcha_challenge_field");
         String responseField = request.getParameter("recaptcha_response_field");
-        
-        System.out.println("remoteAddr = " + remoteAddr);
-        System.out.println("challengeField = " + challengeField);
-        System.out.println("responseField = " + responseField);
-        
+
         ReCaptchaResponse reCaptchaResponse = reCaptcha.checkAnswer(remoteAddr,
                 challengeField, responseField);
 

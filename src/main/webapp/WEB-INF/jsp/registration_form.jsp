@@ -4,6 +4,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="captcha" uri="/WEB-INF/tld/captcha.tld"%>
 <%@ page session="false"%>
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -15,8 +16,8 @@
 			href="<c:url value="/login"/>">login</a>
 	</h2>
 	<br>
-	<table align="left" border="0" cellpadding="2" cellspacing="5">
-		<form:form modelAttribute="userForm" method="POST" enctype="utf8">
+	<form:form modelAttribute="userForm" method="POST" enctype="utf8">
+		<table>
 			<tr>
 				<td><label>Login</label></td>
 				<td><form:input path="login" value="" /></td>
@@ -65,7 +66,7 @@
 					<button type="reset">Cancel</button>
 				</td>
 			</tr>
-		</form:form>
-	</table>
+		</table>
+	</form:form>
 </body>
 </html>
