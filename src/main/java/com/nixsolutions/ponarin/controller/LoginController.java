@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.nixsolutions.ponarin.consatnt.View;
 import com.nixsolutions.ponarin.dao.UserDao;
 
 @Controller
@@ -21,7 +22,7 @@ public class LoginController {
     private UserDao userDao;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String welcomePage(ModelMap model) {
+    public String mainPage(ModelMap model) {
         Authentication auth = SecurityContextHolder.getContext()
                 .getAuthentication();
 
@@ -34,9 +35,9 @@ public class LoginController {
 
         if (authorities.contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
             model.addAttribute("userList", userDao.findAll());
-            return "admin";
+            return View.PAGE_ADMIN;
         } else {
-            return "user";
+            return View.PAGE_USER;
         }
     }
 
@@ -47,7 +48,7 @@ public class LoginController {
             ModelMap model) {
 
         if (error != null) {
-            model.addAttribute("error", "Invalid username and password!");
+            model.addAttribute("error", "Invalid username or password!");
         }
 
         if (logout != null) {

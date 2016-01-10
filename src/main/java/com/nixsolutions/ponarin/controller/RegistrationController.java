@@ -1,26 +1,21 @@
 package com.nixsolutions.ponarin.controller;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.nixsolutions.ponarin.consatnt.View;
 import com.nixsolutions.ponarin.dao.RoleDao;
 import com.nixsolutions.ponarin.dao.UserDao;
 import com.nixsolutions.ponarin.entity.Role;
-import com.nixsolutions.ponarin.entity.User;
 import com.nixsolutions.ponarin.form.UserForm;
 import com.nixsolutions.ponarin.utils.UserUtils;
 
@@ -42,17 +37,32 @@ public class RegistrationController {
     public String showRegistrationForm(ModelMap model) {
         UserForm userForm = new UserForm();
         model.addAttribute("userForm", userForm);
-        return "registration_form";
+        return View.FORM_REG;
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public String registerUserAccount(
+    public ModelAndView registerUserAccount(
             @ModelAttribute("userForm") @Valid UserForm userForm,
-            BindingResult result, ModelMap model, HttpServletRequest request) {
+            BindingResult result, HttpServletRequest request) {
 
-        model.addAttribute("userForm", userForm);
+        ModelAndView model = new ModelAndView();
+        model.addObject("userForm", userForm);
+
         if (result.hasErrors()) {
-            return "registration_form";
+            model.setViewName(View.FORM_REG);
+            return model;
+        }
+
+        if (userUtils.isLoginExists(userForm.getLogin())) {
+            result.rejectValue("login", "", "Login already exists");
+            model.setViewName(View.FORM_REG);
+            return model;
+        }
+
+        if (userUtils.isEmailExists(userForm)) {
+            result.rejectValue("email", "", "Email already exists");
+            model.setViewName(View.FORM_REG);
+            return model;
         }
 
         ReCaptchaImpl reCaptcha = new ReCaptchaImpl();
@@ -62,25 +72,26 @@ public class RegistrationController {
         String challengeField = request
                 .getParameter("recaptcha_challenge_field");
         String responseField = request.getParameter("recaptcha_response_field");
+        
+        System.out.println("remoteAddr = " + remoteAddr);
+        System.out.println("challengeField = " + challengeField);
+        System.out.println("responseField = " + responseField);
+        
         ReCaptchaResponse reCaptchaResponse = reCaptcha.checkAnswer(remoteAddr,
                 challengeField, responseField);
-        if (!reCaptchaResponse.isValid()) {
-            model.addAttribute("invalidCaptcha", "Captcha Is Invalid");
-            return "registration_form";
-        }
 
-        if (userUtils.isLoginExists(userForm.getLogin())) {
-            result.rejectValue("login", "", "Login already exists");
-            return "registration_form";
-        }
-        if (userUtils.isEmailExists(userForm)) {
-            result.rejectValue("email", "", "Email already exists");
-            return "registration_form";
+        if (!reCaptchaResponse.isValid()) {
+            model.addObject("invalidCaptcha", "Captcha is invalid");
+            model.setViewName(View.FORM_REG);
+            return model;
         }
 
         Role role = roleDao.findByName("User");
 
+        model.addObject("userLogin", userForm.getLogin());
+
         userDao.create(userUtils.getUserByForm(userForm, role));
-        return "registration_form_success";
+        model.setViewName(View.FROM_REG_SUCCESS);
+        return model;
     }
 }

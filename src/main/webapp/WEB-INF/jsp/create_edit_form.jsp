@@ -22,6 +22,12 @@
 			href="<c:url value="j_spring_security_logout"/>">Logout</a>)
 	</p>
 	<h1>${action}user</h1>
+
+	<c:if test="${error!=null}">
+		<br>
+		<p>${error}</p>
+	</c:if>
+
 	<br>
 	<table align="left" border="0" cellpadding="2" cellspacing="5">
 		<form:form modelAttribute="userForm" method="POST" enctype="utf8">
@@ -29,8 +35,7 @@
 				<td><label>Login</label></td>
 				<td><c:if test="${edit==null}">
 						<form:input path="login" value="" />
-					</c:if>
-					<c:if test="${edit!=null}">
+					</c:if> <c:if test="${edit!=null}">
 						<form:input path="login" value="" readonly="true" />
 					</c:if></td>
 				<td><form:errors path="login" element="div" /></td>

@@ -4,15 +4,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.nixsolutions.ponarin.consatnt.View;
 import com.nixsolutions.ponarin.dao.RoleDao;
 import com.nixsolutions.ponarin.dao.UserDao;
 import com.nixsolutions.ponarin.entity.Role;
@@ -28,19 +29,13 @@ public class PersonManageController {
     @Autowired
     private RoleDao roleDao;
 
-    @Autowired
-    private UserUtils userUtils;
+    private UserUtils userUtils = new UserUtils();
 
     @RequestMapping(value = "/admin/create", method = RequestMethod.GET)
-    public ModelAndView showCreateForm() {
-        ModelAndView model = new ModelAndView();
-
+    public String showCreateForm(ModelMap model) {
         UserForm userForm = new UserForm();
-
-        model.addObject("userForm", userForm);
-        model.setViewName("create_edit_form");
-
-        return model;
+        model.addAttribute("userForm", userForm);
+        return View.FROM_CREATE_EDIT;
     }
 
     @RequestMapping(value = "/admin/create", method = RequestMethod.POST)
@@ -52,18 +47,19 @@ public class PersonManageController {
         model.addObject("userForm", userForm);
 
         if (result.hasErrors()) {
-            model.setViewName("create_edit_form");
+            model.setViewName(View.FROM_CREATE_EDIT);
             return model;
         }
 
         if (userUtils.isLoginExists(userForm.getLogin())) {
             result.rejectValue("login", "", "Login already exists");
-            model.setViewName("create_edit_form");
+            model.setViewName(View.FROM_CREATE_EDIT);
             return model;
         }
+
         if (userUtils.isEmailExists(userForm)) {
             result.rejectValue("email", "", "Email already exists");
-            model.setViewName("create_edit_form");
+            model.setViewName(View.FROM_CREATE_EDIT);
             return model;
         }
 
@@ -75,37 +71,40 @@ public class PersonManageController {
     }
 
     @RequestMapping(value = "/admin/edit", method = RequestMethod.GET)
-    public ModelAndView showEditForm(HttpServletRequest request) {
+    public String showEditForm(ModelMap model,
+            @RequestParam("person") String personLogin) {
 
-        request.setAttribute("edit", true);
+        model.addAttribute("edit", true);
 
-        User user = userDao.findByLogin(request.getParameter("person"));
+        if (personLogin == null || personLogin.length() == 0) {
+            model.addAttribute("error", "No passed person loggin");
+            return View.FROM_CREATE_EDIT;
+        }
+
+        User user = userDao.findByLogin(personLogin);
         UserForm userForm = userUtils.getFormByUser(user);
 
-        ModelAndView model = new ModelAndView();
-        model.addObject("userForm", userForm);
-        model.setViewName("create_edit_form");
-        return model;
+        model.addAttribute("userForm", userForm);
+        return View.FROM_CREATE_EDIT;
     }
 
     @RequestMapping(value = "/admin/edit", method = RequestMethod.POST)
     public ModelAndView edit(
             @ModelAttribute("userForm") @Valid UserForm userForm,
-            BindingResult result, HttpServletRequest request) {
-
-        request.setAttribute("edit", true);
+            BindingResult result) {
 
         ModelAndView model = new ModelAndView();
+        model.addObject("edit", true);
         model.addObject("userForm", userForm);
 
         if (result.hasErrors()) {
-            model.setViewName("create_edit_form");
+            model.setViewName(View.FROM_CREATE_EDIT);
             return model;
         }
 
         if (userUtils.isEmailExists(userForm)) {
             result.rejectValue("email", "", "Email already exists");
-            model.setViewName("create_edit_form");
+            model.setViewName(View.FROM_CREATE_EDIT);
             return model;
         }
 
@@ -122,11 +121,18 @@ public class PersonManageController {
     }
 
     @RequestMapping(value = "/admin/delete", method = RequestMethod.GET)
-    public ModelAndView delete(HttpServletRequest request) {
+    public ModelAndView delete(@RequestParam("person") String personLogin,
+            HttpServletRequest request) {
+
         ModelAndView model = new ModelAndView();
 
-        String login = request.getParameter("person");
-        User user = userDao.findByLogin(login);
+        if (personLogin == null || personLogin.length() == 0) {
+            model.addObject("error", "No passed person loggin");
+            model.setViewName(View.FROM_CREATE_EDIT);
+            return model;
+        }
+
+        User user = userDao.findByLogin(personLogin);
 
         userDao.remove(user);
 

@@ -11,12 +11,14 @@ import javax.validation.Payload;
 
 import com.nixsolutions.ponarin.validator.PasswordMatchesValidator;
 
-@Target({ElementType.TYPE, ElementType.ANNOTATION_TYPE}) 
+@Target({ ElementType.TYPE, ElementType.ANNOTATION_TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = PasswordMatchesValidator.class)
 @Documented
-public @interface PasswordMatches { 
+public @interface PasswordMatches {
     String message() default "Passwords don't match";
-    Class<?>[] groups() default {}; 
+
+    Class<?>[] groups() default {};
+
     Class<? extends Payload>[] payload() default {};
 }

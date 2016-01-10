@@ -5,16 +5,18 @@
 <title>Login Page</title>
 <style>
 .error {
-	padding: 15px;
+	text-align: center; padding : 15px;
 	margin-bottom: 20px;
 	border: 1px solid transparent;
 	border-radius: 4px;
 	color: #a94442;
 	background-color: #f2dede;
 	border-color: #ebccd1;
+	padding: 15px;
 }
 
 .msg {
+	text-align: center;
 	padding: 15px;
 	margin-bottom: 20px;
 	border: 1px solid transparent;
@@ -25,9 +27,9 @@
 }
 
 #login-box {
-	width: 300px;
+	width: 320px;
 	padding: 20px;
-	margin: 100px auto;
+	margin: 10% 0px 0px 35%;
 	background: #fff;
 	-webkit-border-radius: 2px;
 	-moz-border-radius: 2px;
@@ -37,11 +39,9 @@
 </head>
 <body onload='document.loginForm.username.focus();'>
 
-	<h1>Spring Security Custom Login Form (XML)</h1>
-
 	<div id="login-box">
 
-		<h3>Login with Username and Password</h3>
+		<h3 align="center">Login with Username and Password</h3>
 
 		<c:if test="${not empty error}">
 			<div class="error">${error}</div>
@@ -63,7 +63,7 @@
 					<td><input type='password' name='password' /></td>
 				</tr>
 				<tr>
-					<td colspan='2'><input name="submit" type="submit"
+					<td colspan=2 align="right"><input name="submit" type="submit"
 						value="submit" /></td>
 				</tr>
 			</table>
@@ -72,10 +72,9 @@
 				value="${_csrf.token}" />
 
 		</form>
+		<p align="center">
+			<a href="<c:url value="registration"/>">Registration</a>
+		</p>
 	</div>
-	
-	<p>Or you can <a
-            href="<c:url value="registration"/>">register</a></p>
-
 </body>
 </html>

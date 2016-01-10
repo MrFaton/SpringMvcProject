@@ -10,10 +10,10 @@
 <title>Registration</title>
 </head>
 <body>
-	<H1>
-		Hi new user, here you can register or you can try to <a
+	<h2 align="center">
+		Hi new user, here you can register yourself or you can try to <a
 			href="<c:url value="/login"/>">login</a>
-	</H1>
+	</h2>
 	<br>
 	<table align="left" border="0" cellpadding="2" cellspacing="5">
 		<form:form modelAttribute="userForm" method="POST" enctype="utf8">

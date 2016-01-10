@@ -32,11 +32,10 @@ public class PersonDetailsService implements UserDetailsService {
 
         Collection<GrantedAuthority> grantedAuthorities = new HashSet<>(0);
 
-        String role = "ROLE_" + nativeUser.getRole().getName().toUpperCase();
+        String role = nativeUser.getRole().getName();
+        String springSequrityRole = "ROLE_" + role.toUpperCase();
 
-        grantedAuthorities.add(new SimpleGrantedAuthority(role));
-
-        System.out.println(role);
+        grantedAuthorities.add(new SimpleGrantedAuthority(springSequrityRole));
 
         return new User(nativeUser.getLogin(), nativeUser.getPassword(), true,
                 true, true, true, grantedAuthorities);
