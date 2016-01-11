@@ -70,7 +70,7 @@ public class PersonManageController {
         Role role = roleDao.findByName(userForm.getRole());
 
         userDao.create(userUtils.getUserByForm(userForm, role));
-        model.setViewName("redirect:/");
+        model.setViewName(View.PAGE_REDIRECT_MAIN);
         return model;
     }
 
@@ -79,11 +79,6 @@ public class PersonManageController {
             @RequestParam("person") String personLogin) {
 
         model.addAttribute("edit", true);
-
-        if (personLogin == null || personLogin.length() == 0) {
-            model.addAttribute("error", "No passed person loggin");
-            return View.FROM_CREATE_EDIT;
-        }
 
         User user = userDao.findByLogin(personLogin);
         UserForm userForm = userUtils.getFormByUser(user);
@@ -116,31 +111,26 @@ public class PersonManageController {
 
         User user = userUtils.getUserByForm(userForm, role);
         User dbUser = userDao.findByLogin(user.getLogin());
+
+        if (dbUser == null) {
+            model.setViewName(View.PAGE_REDIRECT_MAIN);
+            return model;
+        }
+
         user.setId(dbUser.getId());
 
         userDao.update(user);
 
-        model.setViewName("redirect:/");
+        model.setViewName(View.PAGE_REDIRECT_MAIN);
         return model;
     }
 
     @RequestMapping(value = "/admin/delete", method = RequestMethod.GET)
-    public ModelAndView delete(@RequestParam("person") String personLogin,
-            HttpServletRequest request) {
-
-        ModelAndView model = new ModelAndView();
-
-        if (personLogin == null || personLogin.length() == 0) {
-            model.addObject("error", "No passed person loggin");
-            model.setViewName(View.FROM_CREATE_EDIT);
-            return model;
-        }
-
+    public String delete(@RequestParam("person") String personLogin) {
         User user = userDao.findByLogin(personLogin);
-
-        userDao.remove(user);
-
-        model.setViewName("redirect:/");
-        return model;
+        if (user != null) {
+            userDao.remove(user);
+        }
+        return View.PAGE_REDIRECT_MAIN;
     }
 }

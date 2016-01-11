@@ -27,12 +27,6 @@
 			href="<c:url value="/j_spring_security_logout"/>">Logout</a>)
 	</p>
 	<h1>${action}user</h1>
-
-	<c:if test="${error!=null}">
-		<br>
-		<p>${error}</p>
-	</c:if>
-
 	<br>
 	<form:form modelAttribute="userForm" method="POST" enctype="utf8">
 		<table align="left" border="0" cellpadding="2" cellspacing="5">
