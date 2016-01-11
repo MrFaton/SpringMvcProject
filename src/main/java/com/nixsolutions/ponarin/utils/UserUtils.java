@@ -73,4 +73,9 @@ public class UserUtils {
         }
         return true;
     }
+    
+    public void resetPasswords(UserForm userForm) {
+        userForm.setPassword("");
+        userForm.setMatchingPassword("");
+    }
 }

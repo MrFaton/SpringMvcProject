@@ -36,8 +36,8 @@ public class LoginController {
         if (authorities.contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
             model.addAttribute("userList", userDao.findAll());
             return View.PAGE_ADMIN;
-        } else if (authorities
-                .contains(new SimpleGrantedAuthority("ROLE_USER"))) {
+        } else
+            if (authorities.contains(new SimpleGrantedAuthority("ROLE_USER"))) {
             return View.PAGE_USER;
         } else {
             return "login";
@@ -61,4 +61,8 @@ public class LoginController {
         return "login";
     }
 
+    @RequestMapping(value = "/403", method = RequestMethod.GET)
+    public String accesssDenied() {
+        return "403";
+    }
 }

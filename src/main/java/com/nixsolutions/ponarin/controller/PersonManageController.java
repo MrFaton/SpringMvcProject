@@ -29,7 +29,8 @@ public class PersonManageController {
     @Autowired
     private RoleDao roleDao;
 
-    private UserUtils userUtils = new UserUtils();
+    @Autowired
+    private UserUtils userUtils;
 
     @RequestMapping(value = "/admin/create", method = RequestMethod.GET)
     public String showCreateForm(ModelMap model) {
@@ -47,17 +48,20 @@ public class PersonManageController {
         model.addObject("userForm", userForm);
 
         if (result.hasErrors()) {
+            userUtils.resetPasswords(userForm);
             model.setViewName(View.FROM_CREATE_EDIT);
             return model;
         }
 
         if (userUtils.isLoginExists(userForm.getLogin())) {
+            userUtils.resetPasswords(userForm);
             result.rejectValue("login", "", "Login already exists");
             model.setViewName(View.FROM_CREATE_EDIT);
             return model;
         }
 
         if (userUtils.isEmailExists(userForm)) {
+            userUtils.resetPasswords(userForm);
             result.rejectValue("email", "", "Email already exists");
             model.setViewName(View.FROM_CREATE_EDIT);
             return model;

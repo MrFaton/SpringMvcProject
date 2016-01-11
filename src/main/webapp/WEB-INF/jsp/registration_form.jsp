@@ -37,12 +37,13 @@
 				<td><label>Confirm password </label></td>
 				<td><form:input path="matchingPassword" value=""
 						type="password" /></td>
-				<td><form:errors element="div" cssClass="error"/></td>
+				<td><form:errors element="div" cssClass="error" /></td>
 			</tr>
 			<tr>
 				<td><label>First name </label></td>
 				<td><form:input path="firstName" value="" /></td>
-				<td><form:errors path="firstName" cssClass="error" element="div" /></td>
+				<td><form:errors path="firstName" cssClass="error"
+						element="div" /></td>
 			</tr>
 			<tr>
 				<td><label>Last name </label></td>
@@ -60,7 +61,7 @@
 				<td><form:errors path="birthDay" cssClass="error" element="div" /></td>
 			</tr>
 			<tr>
-				<td colspan='2'><captcha:captcha themeName="clean"
+				<td colspan='3'><captcha:captcha themeName="clean"
 						publickey="6LeD4BQTAAAAAPJmHF5lKV-Se_-tJ9nvRSrYZfhk"
 						privatekey="6LeD4BQTAAAAAPRpVTFZbmv17K_YqjVtRig6cwme" /></td>
 				<td class="error">${invalidCaptcha}</td>

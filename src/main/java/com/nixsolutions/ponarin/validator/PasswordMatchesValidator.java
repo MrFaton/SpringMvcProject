@@ -14,8 +14,7 @@ public class PasswordMatchesValidator
     }
 
     @Override
-    public boolean isValid(UserForm form,
-            ConstraintValidatorContext context) {
+    public boolean isValid(UserForm form, ConstraintValidatorContext context) {
         return form.getPassword().equals(form.getMatchingPassword());
     }
 }

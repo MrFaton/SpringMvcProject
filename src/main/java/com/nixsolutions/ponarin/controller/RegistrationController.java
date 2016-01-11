@@ -49,17 +49,20 @@ public class RegistrationController {
         model.addObject("userForm", userForm);
 
         if (result.hasErrors()) {
+            userUtils.resetPasswords(userForm);
             model.setViewName(View.FORM_REG);
             return model;
         }
 
         if (userUtils.isLoginExists(userForm.getLogin())) {
+            userUtils.resetPasswords(userForm);
             result.rejectValue("login", "", "Login already exists");
             model.setViewName(View.FORM_REG);
             return model;
         }
 
         if (userUtils.isEmailExists(userForm)) {
+            userUtils.resetPasswords(userForm);
             result.rejectValue("email", "", "Email already exists");
             model.setViewName(View.FORM_REG);
             return model;

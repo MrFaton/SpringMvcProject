@@ -27,7 +27,7 @@
 }
 
 #login-box {
-	width: 320px;
+	width: 330px;
 	padding: 20px;
 	margin: 10% 0px 0px 35%;
 	background: #fff;
@@ -41,7 +41,7 @@
 
 	<div id="login-box">
 
-		<h3 align="center">Login with Username and Password</h3>
+		<h3 align="center">Enter login and password</h3>
 
 		<c:if test="${not empty error}">
 			<div class="error">${error}</div>
@@ -55,7 +55,7 @@
 
 			<table>
 				<tr>
-					<td>User:</td>
+					<td>Login:</td>
 					<td><input type='text' name='username'></td>
 				</tr>
 				<tr>

@@ -15,11 +15,16 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${action}User</title>
+<style>
+.error {
+	color: red;
+}
+</style>
 </head>
 <body>
 	<p align="right">
 		Admin ${user.firstName} (<a
-			href="<c:url value="j_spring_security_logout"/>">Logout</a>)
+			href="<c:url value="/j_spring_security_logout"/>">Logout</a>)
 	</p>
 	<h1>${action}user</h1>
 
@@ -38,38 +43,39 @@
 					</c:if> <c:if test="${edit!=null}">
 						<form:input path="login" value="" readonly="true" />
 					</c:if></td>
-				<td><form:errors path="login" element="div" /></td>
+				<td><form:errors path="login" element="div" cssClass="error" /></td>
 			</tr>
 			<tr>
 				<td><label>Password </label></td>
 				<td><form:input path="password" value="" type="password" /></td>
-				<td><form:errors path="password" element="div" /></td>
+				<td><form:errors path="password" element="div" cssClass="error" /></td>
 			</tr>
 			<tr>
 				<td><label>Confirm password </label></td>
 				<td><form:input path="matchingPassword" value=""
 						type="password" /></td>
-				<td><form:errors element="div" /></td>
+				<td><form:errors element="div" cssClass="error" /></td>
 			</tr>
 			<tr>
 				<td><label>First name </label></td>
 				<td><form:input path="firstName" value="" /></td>
-				<td><form:errors path="firstName" element="div" /></td>
+				<td><form:errors path="firstName" element="div"
+						cssClass="error" /></td>
 			</tr>
 			<tr>
 				<td><label>Last name </label></td>
 				<td><form:input path="lastName" value="" /></td>
-				<td><form:errors path="lastName" element="div" /></td>
+				<td><form:errors path="lastName" element="div" cssClass="error" /></td>
 			</tr>
 			<tr>
 				<td><label>Email </label></td>
 				<td><form:input path="email" value="" /></td>
-				<td><form:errors path="email" element="div" /></td>
+				<td><form:errors path="email" element="div" cssClass="error" /></td>
 			</tr>
 			<tr>
 				<td><label>Birthday</label></td>
 				<td><form:input path="birthDay" placeholder="25-12-1990" /></td>
-				<td><form:errors path="birthDay" element="div" /></td>
+				<td><form:errors path="birthDay" element="div" cssClass="error" /></td>
 			</tr>
 			<tr>
 				<td><label>Role </label></td>

@@ -111,4 +111,11 @@ public class UserForm {
         this.role = role;
     }
 
+    @Override
+    public String toString() {
+        return "UserForm [login=" + login + ", password=" + password
+                + ", matchingPassword=" + matchingPassword + ", email=" + email
+                + ", firstName=" + firstName + ", lastName=" + lastName
+                + ", birthDay=" + birthDay + ", role=" + role + "]";
+    }
 }
