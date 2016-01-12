@@ -22,28 +22,28 @@ public class HibernateRoleDao implements RoleDao {
     private SessionFactory sessionFactory;
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional()
     public void create(Role role) {
         logger.trace("create " + role);
         sessionFactory.getCurrentSession().save(role);
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional()
     public void update(Role role) {
         logger.trace("update " + role);
         sessionFactory.getCurrentSession().update(role);
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional()
     public void remove(Role role) {
         logger.trace("remove " + role);
         sessionFactory.getCurrentSession().delete(role);
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional()
     public Role findByName(String name) {
         logger.trace("searching for role by name = " + name);
 

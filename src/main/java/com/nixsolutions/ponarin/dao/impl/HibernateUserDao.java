@@ -24,21 +24,21 @@ public class HibernateUserDao implements UserDao {
     private SessionFactory sessionFactory;
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional()
     public void create(User user) {
         logger.trace("create " + user);
         sessionFactory.getCurrentSession().save(user);
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional()
     public void update(User user) {
         logger.trace("update " + user);
         sessionFactory.getCurrentSession().update(user);
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional()
     public void remove(User user) {
         logger.trace("remove " + user);
         sessionFactory.getCurrentSession().delete(user);
@@ -56,7 +56,7 @@ public class HibernateUserDao implements UserDao {
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional()
     public User findByLogin(String login) {
         logger.trace("find user by login = " + login);
 
@@ -67,7 +67,7 @@ public class HibernateUserDao implements UserDao {
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional()
     public User findByEmail(String email) {
         logger.trace("find user by email = " + email);
 
