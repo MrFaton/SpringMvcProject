@@ -56,6 +56,13 @@ public class HibernateUserDao implements UserDao {
     }
 
     @Override
+    @Transactional
+    public User findById(long id) {
+        logger.trace("find user by id = " + id);
+        return (User) sessionFactory.getCurrentSession().get(User.class, id);
+    }
+
+    @Override
     @Transactional()
     public User findByLogin(String login) {
         logger.trace("find user by login = " + login);
