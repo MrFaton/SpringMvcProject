@@ -1,7 +1,7 @@
 package com.nixsolutions.ponarin.consatnt;
 
 public class View {
-    public static final String PAGE_LOGIN = "login";
+    public static final String PAGE_LOGIN = "login_form";
     public static final String FORM_REG = "registration_form";
     public static final String FROM_REG_SUCCESS = "registration_form_success";
     public static final String FROM_CREATE = "create_form";

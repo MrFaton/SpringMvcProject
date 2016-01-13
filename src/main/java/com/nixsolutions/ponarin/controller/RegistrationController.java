@@ -17,12 +17,9 @@ import com.nixsolutions.ponarin.dao.RoleDao;
 import com.nixsolutions.ponarin.dao.UserDao;
 import com.nixsolutions.ponarin.entity.Role;
 import com.nixsolutions.ponarin.form.UserForm;
+import com.nixsolutions.ponarin.utils.Captcha;
 import com.nixsolutions.ponarin.utils.UserUtils;
 
-import net.tanesha.recaptcha.ReCaptchaImpl;
-import net.tanesha.recaptcha.ReCaptchaResponse;
-
-@Controller
 public class RegistrationController {
     @Autowired
     private UserDao userDao;
@@ -32,6 +29,9 @@ public class RegistrationController {
 
     @Autowired
     private UserUtils userUtils;
+
+    @Autowired
+    private Captcha captcha;
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String showRegistrationForm(ModelMap model) {
@@ -68,18 +68,12 @@ public class RegistrationController {
             return model;
         }
 
-        ReCaptchaImpl reCaptcha = new ReCaptchaImpl();
-        reCaptcha.setPrivateKey("6LeD4BQTAAAAAPRpVTFZbmv17K_YqjVtRig6cwme");
-
         String remoteAddr = request.getRemoteAddr();
         String challengeField = request
                 .getParameter("recaptcha_challenge_field");
         String responseField = request.getParameter("recaptcha_response_field");
 
-        ReCaptchaResponse reCaptchaResponse = reCaptcha.checkAnswer(remoteAddr,
-                challengeField, responseField);
-
-        if (!reCaptchaResponse.isValid()) {
+        if (!captcha.isValid(remoteAddr, challengeField, responseField)) {
             userUtils.resetPasswords(userForm);
             model.addObject("invalidCaptcha", "Captcha is invalid");
             model.setViewName(View.FORM_REG);

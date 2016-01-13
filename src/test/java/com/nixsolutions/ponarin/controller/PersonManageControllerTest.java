@@ -12,7 +12,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.util.MultiValueMap;
-import org.springframework.security.test.context.support.WithMockUser;
 
 import com.nixsolutions.ponarin.consatnt.View;
 import com.nixsolutions.ponarin.dao.RoleDao;
@@ -25,11 +24,11 @@ import com.nixsolutions.ponarin.utils.UserUtils;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 import static org.mockito.Mockito.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:/app-context-test.xml",
-        "classpath:/spring-security-test.xml" })
+@ContextConfiguration(locations = ("classpath:/app-context-test.xml"))
 @WebAppConfiguration
 public class PersonManageControllerTest {
     @Mock
@@ -57,7 +56,6 @@ public class PersonManageControllerTest {
     }
 
     @Test
-//    @WithMockUser(username = "User", password = "321")
     public void testShowCreateForm() throws Exception {
         mockMvc.perform(get("/admin/create")).andExpect(status().isOk())
                 .andExpect(model().attributeExists("userForm"))
@@ -71,7 +69,6 @@ public class PersonManageControllerTest {
         when(userUtils.getUserByForm(any(UserForm.class), any(Role.class)))
                 .thenReturn(new User());
         when(roleDao.findByName(anyString())).thenReturn(new Role());
-        when(userDao.findByLogin(anyString())).thenReturn(new User());
 
         mockMvc.perform(post("/admin/create")
                 .params(userFormUtils.createParamsUserForm()))
