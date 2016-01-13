@@ -28,7 +28,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.mockito.Mockito.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = ("classpath:/app-context-test.xml"))
+@ContextConfiguration(locations = { "classpath:/app-context-test.xml",
+        "classpath:/spring-security-test.xml" })
 @WebAppConfiguration
 public class PersonManageControllerTest {
     @Mock
@@ -56,7 +57,7 @@ public class PersonManageControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "User", password = "321")
+//    @WithMockUser(username = "User", password = "321")
     public void testShowCreateForm() throws Exception {
         mockMvc.perform(get("/admin/create")).andExpect(status().isOk())
                 .andExpect(model().attributeExists("userForm"))
