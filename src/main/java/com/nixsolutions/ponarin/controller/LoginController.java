@@ -40,7 +40,7 @@ public class LoginController {
             if (authorities.contains(new SimpleGrantedAuthority("ROLE_USER"))) {
             return View.PAGE_USER;
         } else {
-            return "login";
+            return View.PAGE_LOGIN;
         }
     }
 
