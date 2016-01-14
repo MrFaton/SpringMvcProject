@@ -89,8 +89,6 @@ public class PersonManageControllerTest {
                 .andExpect(
                         model().attributeHasFieldErrors("userForm", "password"))
                 .andExpect(view().name(View.FROM_CREATE));
-
-        verifyZeroInteractions(userDao);
     }
 
     @Test
@@ -157,8 +155,6 @@ public class PersonManageControllerTest {
                 .andExpect(
                         model().attributeHasFieldErrors("userForm", "birthDay"))
                 .andExpect(view().name(View.FROM_EDIT));
-
-        verifyZeroInteractions(userDao);
     }
 
     @Test
