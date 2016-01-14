@@ -20,6 +20,7 @@ import com.nixsolutions.ponarin.form.UserForm;
 import com.nixsolutions.ponarin.utils.Captcha;
 import com.nixsolutions.ponarin.utils.UserUtils;
 
+@Controller
 public class RegistrationController {
     @Autowired
     private UserDao userDao;

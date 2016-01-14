@@ -18,7 +18,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.util.MultiValueMap;
-
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -31,8 +30,6 @@ import com.nixsolutions.ponarin.form.UserForm;
 import com.nixsolutions.ponarin.utils.Captcha;
 import com.nixsolutions.ponarin.utils.UserFormUtils;
 import com.nixsolutions.ponarin.utils.UserUtils;
-
-import static org.mockito.Mockito.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = ("classpath:/app-context-test.xml"))
@@ -101,8 +98,6 @@ public class RegistrationControllerTest {
                 .andExpect(model().hasErrors()).andExpect(model()
                         .attributeHasFieldErrors("userForm", "firstName"))
                 .andExpect(view().name(View.FORM_REG));
-
-        verifyZeroInteractions(userDao);
     }
 
     @Test

@@ -52,7 +52,8 @@ public class UsersTableTag extends SimpleTagSupport {
             strBuilder.append("  ");
 
             strBuilder.append("<a href=\"" + deleteControllerPath);
-            strBuilder.append("?person_id=" + user.getId() + "\">Delete</a>");
+            strBuilder.append("?person_id=" + user.getId()
+                    + "\" onclick=\"return confirm('Are you sure?');\">Delete</a>");
             strBuilder.append("</td>");
 
             strBuilder.append("</tr>");
